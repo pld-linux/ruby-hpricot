@@ -1,4 +1,5 @@
 Summary:	A fast and easy HTML parser
+Summary(pl):	Szybki i prosty analizator HTML-a
 Name:		ruby-hpricot
 Version:	0.4
 Release:	1
@@ -10,7 +11,6 @@ URL:		http://code.whytheluckystiff.net/hpricot/
 BuildRequires:	rake
 BuildRequires:	rpmbuild(macros) >= 1.277
 BuildRequires:	setup.rb = 3.3.1
-#BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -18,6 +18,12 @@ Hpricot is a very flexible HTML parser, based on Tanaka Akira's HTree
 and John Resig's JQuery, but with the scanner recoded in C (using
 Ragel for scanning.) I've borrowed what I believe to be the best ideas
 from these wares to make Hpricot heaps of fun to use.
+
+%description -l pl
+Hpricot to bardzo elastyczny analizator HTML-a, oparty na HTree Tanaka
+Akiry i JQuery Johna Resiga, ale ze skanerem napisanym w C
+(wykorzystuj±cym Ragela).  Z tych wyrobów zapo¿yczono najlepsze
+pomys³y, aby uczyniæ Hpricota najprzyjemniejszym w u¿yciu.
 
 %prep
 %setup -q -n hpricot-%{version}
