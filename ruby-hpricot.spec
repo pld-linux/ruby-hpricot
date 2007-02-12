@@ -1,5 +1,5 @@
 Summary:	A fast and easy HTML parser
-Summary(pl.UTF-8):   Szybki i prosty analizator HTML-a
+Summary(pl.UTF-8):	Szybki i prosty analizator HTML-a
 Name:		ruby-hpricot
 Version:	0.5
 Release:	1
