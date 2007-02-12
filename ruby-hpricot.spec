@@ -1,5 +1,5 @@
 Summary:	A fast and easy HTML parser
-Summary(pl):	Szybki i prosty analizator HTML-a
+Summary(pl.UTF-8):   Szybki i prosty analizator HTML-a
 Name:		ruby-hpricot
 Version:	0.5
 Release:	1
@@ -19,11 +19,11 @@ and John Resig's JQuery, but with the scanner recoded in C (using
 Ragel for scanning.) I've borrowed what I believe to be the best ideas
 from these wares to make Hpricot heaps of fun to use.
 
-%description -l pl
+%description -l pl.UTF-8
 Hpricot to bardzo elastyczny analizator HTML-a, oparty na HTree Tanaka
 Akiry i JQuery Johna Resiga, ale ze skanerem napisanym w C
-(wykorzystuj±cym Ragela). Z tych wyrobów zapo¿yczono najlepsze
-pomys³y, aby uczyniæ Hpricota najprzyjemniejszym w u¿yciu.
+(wykorzystujÄ…cym Ragela). Z tych wyrobÃ³w zapoÅ¼yczono najlepsze
+pomysÅ‚y, aby uczyniÄ‡ Hpricota najprzyjemniejszym w uÅ¼yciu.
 
 %prep
 %setup -q -c -n hpricot-%{version}
