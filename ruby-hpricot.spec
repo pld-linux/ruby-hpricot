@@ -1,12 +1,12 @@
 Summary:	A fast and easy HTML parser
 Summary(pl.UTF-8):	Szybki i prosty analizator HTML-a
 Name:		ruby-hpricot
-Version:	0.5.110
+Version:	0.6
 Release:	1
 License:	Ruby's
 Group:		Development/Languages
 Source0:	http://code.whytheluckystiff.net/gems/hpricot-%{version}.gem
-# Source0-md5:	47323bdb2ad625c08c56795eb60a129f
+# Source0-md5:	389a3389ddb2e9aac989491dc05f4297
 URL:		http://code.whytheluckystiff.net/hpricot/
 BuildRequires:	rake
 BuildRequires:	rpmbuild(macros) >= 1.277
