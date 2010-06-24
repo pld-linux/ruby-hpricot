@@ -1,16 +1,15 @@
 Summary:	A fast and easy HTML parser
 Summary(pl.UTF-8):	Szybki i prosty analizator HTML-a
 Name:		ruby-hpricot
-Version:	0.6
+Version:	0.8.2
 Release:	1
 License:	Ruby's
 Group:		Development/Languages
-Source0:	http://code.whytheluckystiff.net/gems/hpricot-%{version}.gem
-# Source0-md5:	389a3389ddb2e9aac989491dc05f4297
-URL:		http://code.whytheluckystiff.net/hpricot/
-BuildRequires:	rake
+Source0:	http://github.com/hpricot/hpricot/tarball/0.8.2/%{name}-%{version}.tar.gz
+# Source0-md5:	def40ba2aeb04511df9ec47d3bcecf0e
+URL:		http://hpricot.com/
 BuildRequires:	rpmbuild(macros) >= 1.277
-BuildRequires:	setup.rb = 3.3.1
+BuildRequires:	ruby-rake
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -26,9 +25,9 @@ Akiry i JQuery Johna Resiga, ale ze skanerem napisanym w C
 pomysły, aby uczynić Hpricota najprzyjemniejszym w użyciu.
 
 %prep
-%setup -q -c -n hpricot-%{version}
-tar xzf data.tar.gz
-cp %{_datadir}/setup.rb .
+%setup -q -c
+mv hpricot-hpricot-*/* .
+rm -rf hpricot-hpricot-*
 
 %build
 cd ext/hpricot_scan
@@ -61,4 +60,5 @@ rm -rf $RPM_BUILD_ROOT
 #%doc rdoc
 %{ruby_rubylibdir}/hpricot*
 %{ruby_archdir}/hpricot*
+%{ruby_archdir}/fast_xs.so
 #%{ruby_ridir}/*
