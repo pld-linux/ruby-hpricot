@@ -9,7 +9,8 @@ Source0:	http://github.com/hpricot/hpricot/tarball/0.8.2/%{name}-%{version}.tar.
 # Source0-md5:	def40ba2aeb04511df9ec47d3bcecf0e
 URL:		http://hpricot.com/
 BuildRequires:	rpmbuild(macros) >= 1.277
-BuildRequires:	ruby-rake
+BuildRequires:	ruby-devel
+BuildRequires:	ruby-modules
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
