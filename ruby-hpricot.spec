@@ -2,7 +2,7 @@ Summary:	A fast and easy HTML parser
 Summary(pl.UTF-8):	Szybki i prosty analizator HTML-a
 Name:		ruby-hpricot
 Version:	0.8.2
-Release:	2
+Release:	3
 License:	MIT
 Group:		Development/Languages
 Source0:	http://github.com/hpricot/hpricot/tarball/0.8.2/%{name}-%{version}.tar.gz
