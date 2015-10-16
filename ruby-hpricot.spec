@@ -5,10 +5,11 @@ Version:	0.8.2
 Release:	4
 License:	MIT
 Group:		Development/Languages
-Source0:	http://github.com/hpricot/hpricot/tarball/0.8.2/%{name}-%{version}.tar.gz
+Source0:	http://github.com/hpricot/hpricot/tarball/%{version}/%{name}-%{version}.tar.gz
 # Source0-md5:	def40ba2aeb04511df9ec47d3bcecf0e
 URL:		http://hpricot.com/
-BuildRequires:	rpmbuild(macros) >= 1.277
+BuildRequires:	rpm-rubyprov
+BuildRequires:	rpmbuild(macros) >= 1.665
 BuildRequires:	ruby-devel
 BuildRequires:	ruby-modules
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -26,19 +27,18 @@ Akiry i JQuery Johna Resiga, ale ze skanerem napisanym w C
 pomysły, aby uczynić Hpricota najprzyjemniejszym w użyciu.
 
 %prep
-%setup -q -c
+%setup -qc
 mv hpricot-hpricot-*/* .
-rm -rf hpricot-hpricot-*
 
-%build
 cd ext/hpricot_scan
 ls *.c *.h > MANIFEST
-cd ../..
-ruby setup.rb config \
-	--rbdir=%{ruby_rubylibdir} \
-	--sodir=%{ruby_archdir}
 
-ruby setup.rb setup
+%build
+%{__ruby} setup.rb config \
+	--rbdir=%{ruby_vendorlibdir} \
+	--sodir=%{ruby_vendorarchdir}
+
+%{__ruby} setup.rb setup
 
 # rdoc crashes on _why's craaazy code.
 #rdoc --op rdoc lib
@@ -47,8 +47,7 @@ ruby setup.rb setup
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{ruby_archdir},%{ruby_ridir}}
-
-ruby setup.rb install \
+%{__ruby} setup.rb install \
 	--prefix=$RPM_BUILD_ROOT
 
 #cp -a ri/* $RPM_BUILD_ROOT%{ruby_ridir}
@@ -58,8 +57,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-#%doc rdoc
-%{ruby_rubylibdir}/hpricot*
-%{ruby_archdir}/hpricot*
-%{ruby_archdir}/fast_xs.so
-#%{ruby_ridir}/*
+%{ruby_vendorlibdir}/hpricot.rb
+%{ruby_vendorlibdir}/hpricot
+%attr(755,root,root) %{ruby_vendorarchdir}/fast_xs.so
+%attr(755,root,root) %{ruby_vendorarchdir}/hpricot_scan.so
