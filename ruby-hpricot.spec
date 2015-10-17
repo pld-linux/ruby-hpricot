@@ -2,11 +2,12 @@
 # Conditional build:
 %bcond_without	tests		# build without tests
 
+%define pkgname hpricot
 Summary:	A fast and easy HTML parser
 Summary(pl.UTF-8):	Szybki i prosty analizator HTML-a
-Name:		ruby-hpricot
+Name:		ruby-%{pkgname}
 Version:	0.8.6
-Release:	1
+Release:	2
 License:	MIT
 Group:		Development/Languages
 Source0:	http://github.com/hpricot/hpricot/tarball/%{version}/%{name}-%{version}.tar.gz
@@ -38,6 +39,12 @@ cd ext/hpricot_scan
 ls *.c *.h > MANIFEST
 
 %build
+# make gemspec self-contained
+ruby -r rubygems -e 'spec = eval(File.read("%{pkgname}.gemspec"))
+	File.open("%{pkgname}-%{version}.gemspec", "w") do |file|
+	file.puts spec.to_ruby_for_cache
+end'
+
 %{__ruby} setup.rb config \
 	--rbdir=%{ruby_vendorlibdir} \
 	--sodir=%{ruby_vendorarchdir}
@@ -54,9 +61,11 @@ ls *.c *.h > MANIFEST
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{ruby_archdir},%{ruby_ridir}}
+install -d $RPM_BUILD_ROOT{%{ruby_specdir},%{ruby_ridir}}
 %{__ruby} setup.rb install \
 	--prefix=$RPM_BUILD_ROOT
+
+cp -p %{pkgname}-%{version}.gemspec $RPM_BUILD_ROOT%{ruby_specdir}
 
 #cp -a ri/* $RPM_BUILD_ROOT%{ruby_ridir}
 
@@ -69,3 +78,4 @@ rm -rf $RPM_BUILD_ROOT
 %{ruby_vendorlibdir}/hpricot
 %attr(755,root,root) %{ruby_vendorarchdir}/fast_xs.so
 %attr(755,root,root) %{ruby_vendorarchdir}/hpricot_scan.so
+%{ruby_specdir}/%{pkgname}-%{version}.gemspec
