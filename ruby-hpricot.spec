@@ -1,3 +1,7 @@
+#
+# Conditional build:
+%bcond_without	tests		# build without tests
+
 Summary:	A fast and easy HTML parser
 Summary(pl.UTF-8):	Szybki i prosty analizator HTML-a
 Name:		ruby-hpricot
@@ -39,6 +43,10 @@ ls *.c *.h > MANIFEST
 	--sodir=%{ruby_vendorarchdir}
 
 %{__ruby} setup.rb setup
+
+%if %{with tests}
+%{__ruby} -Ilib -Iext/fast_xs -Iext/hpricot_scan -r hpricot -e 1
+%endif
 
 # rdoc crashes on _why's craaazy code.
 #rdoc --op rdoc lib
