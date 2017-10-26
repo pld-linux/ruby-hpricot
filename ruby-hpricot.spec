@@ -7,16 +7,16 @@ Summary:	A fast and easy HTML parser
 Summary(pl.UTF-8):	Szybki i prosty analizator HTML-a
 Name:		ruby-%{pkgname}
 Version:	0.8.6
-Release:	4
+Release:	5
 License:	MIT
 Group:		Development/Languages
-Source0:	http://github.com/hpricot/hpricot/tarball/%{version}/%{name}-%{version}.tar.gz
+Source0:	https://github.com/hpricot/hpricot/tarball/%{version}/%{name}-%{version}.tar.gz
 # Source0-md5:	e11ebb954ffebc56d54e3be7ada373ca
-URL:		http://hpricot.com/
-BuildRequires:	rpm-rubyprov
+URL:		https://rubygems.org/gems/hpricot
 BuildRequires:	rpmbuild(macros) >= 1.665
 BuildRequires:	ruby-devel
 BuildRequires:	ruby-modules
+BuildRequires:	setup.rb >= 3.4.1-6
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -34,6 +34,8 @@ pomysły, aby uczynić Hpricota najprzyjemniejszym w użyciu.
 %prep
 %setup -qc
 mv hpricot-hpricot-*/* .
+
+cp %{_datadir}/setup.rb .
 
 cd ext/hpricot_scan
 ls *.c *.h > MANIFEST
