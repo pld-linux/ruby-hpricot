@@ -10,8 +10,9 @@ Version:	0.8.6
 Release:	6
 License:	MIT
 Group:		Development/Languages
-Source0:	https://github.com/hpricot/hpricot/tarball/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	e11ebb954ffebc56d54e3be7ada373ca
+#Source0Download: https://github.com/hpricot/hpricot/releases
+Source0:	https://github.com/hpricot/hpricot/archive/%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	22cb09304283a1b9590385850bd462c1
 URL:		https://rubygems.org/gems/hpricot
 BuildRequires:	rpmbuild(macros) >= 1.665
 BuildRequires:	ruby-devel
@@ -32,8 +33,7 @@ Akiry i JQuery Johna Resiga, ale ze skanerem napisanym w C
 pomysły, aby uczynić Hpricota najprzyjemniejszym w użyciu.
 
 %prep
-%setup -qc
-mv hpricot-hpricot-*/* .
+%setup -q -n hpricot-%{version}
 
 cp %{_datadir}/setup.rb .
 
