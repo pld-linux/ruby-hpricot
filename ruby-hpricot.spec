@@ -7,7 +7,7 @@ Summary:	A fast and easy HTML parser
 Summary(pl.UTF-8):	Szybki i prosty analizator HTML-a
 Name:		ruby-%{pkgname}
 Version:	0.8.6
-Release:	6
+Release:	7
 License:	MIT
 Group:		Development/Languages
 #Source0Download: https://github.com/hpricot/hpricot/releases
