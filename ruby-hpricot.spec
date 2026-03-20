@@ -1,83 +1,102 @@
-#
-# Conditional build:
-%bcond_without	tests		# build without tests
-
-%define pkgname hpricot
-Summary:	A fast and easy HTML parser
-Summary(pl.UTF-8):	Szybki i prosty analizator HTML-a
-Name:		ruby-%{pkgname}
+Summary:	A fast HTML parser
+Summary(pl.UTF-8):	Szybki parser HTML-a
+Name:		ruby-hpricot
 Version:	0.8.6
-Release:	7
+Release:	8
 License:	MIT
 Group:		Development/Languages
-#Source0Download: https://github.com/hpricot/hpricot/releases
-Source0:	https://github.com/hpricot/hpricot/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	22cb09304283a1b9590385850bd462c1
-URL:		https://rubygems.org/gems/hpricot
+Source0:	https://rubygems.org/downloads/hpricot-%{version}.gem
+# Source0-md5:	b0f1f02448037f4f6243c33d5f818fa4
+Patch0:		hpricot-ruby34.patch
+URL:		https://github.com/hpricot/hpricot
+BuildRequires:	rpm-rubyprov
 BuildRequires:	rpmbuild(macros) >= 1.665
 BuildRequires:	ruby-devel
-BuildRequires:	ruby-modules
-BuildRequires:	setup.rb >= 3.4.1-6
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Hpricot is a very flexible HTML parser, based on Tanaka Akira's HTree
-and John Resig's JQuery, but with the scanner recoded in C (using
-Ragel for scanning.) I've borrowed what I believe to be the best ideas
-from these wares to make Hpricot heaps of fun to use.
+Hpricot is a fast HTML parser, based on a small C-based scanner.
 
 %description -l pl.UTF-8
-Hpricot to bardzo elastyczny analizator HTML-a, oparty na HTree Tanaka
-Akiry i JQuery Johna Resiga, ale ze skanerem napisanym w C
-(wykorzystującym Ragela). Z tych wyrobów zapożyczono najlepsze
-pomysły, aby uczynić Hpricota najprzyjemniejszym w użyciu.
+Hpricot to szybki parser HTML-a, oparty na niewielkim skanerze w C.
+
+%package rdoc
+Summary:	HTML documentation for %{name}
+Summary(pl.UTF-8):	Dokumentacja w formacie HTML dla %{name}
+Group:		Documentation
+Requires:	ruby >= 1:1.8.7-4
+BuildArch:	noarch
+
+%description rdoc
+HTML documentation for %{name}.
+
+%description rdoc -l pl.UTF-8
+Dokumentacja w formacie HTML dla %{name}.
+
+%package ri
+Summary:	ri documentation for %{name}
+Summary(pl.UTF-8):	Dokumentacja w formacie ri dla %{name}
+Group:		Documentation
+Requires:	ruby
+BuildArch:	noarch
+
+%description ri
+ri documentation for %{name}.
+
+%description ri -l pl.UTF-8
+Dokumentacji w formacie ri dla %{name}.
 
 %prep
 %setup -q -n hpricot-%{version}
-
-cp %{_datadir}/setup.rb .
-
-cd ext/hpricot_scan
-ls *.c *.h > MANIFEST
+%patch -P0 -p1
 
 %build
-# make gemspec self-contained
-ruby -r rubygems -e 'spec = eval(File.read("%{pkgname}.gemspec"))
-	File.open("%{pkgname}-%{version}.gemspec", "w") do |file|
-	file.puts spec.to_ruby_for_cache
-end'
+cd ext/hpricot_scan
+%{__ruby} extconf.rb
+%{__make} \
+	CC="%{__cc}" \
+	CFLAGS="%{rpmcflags} -fPIC"
 
-%{__ruby} setup.rb config \
-	--rbdir=%{ruby_vendorlibdir} \
-	--sodir=%{ruby_vendorarchdir}
+cd ../fast_xs
+%{__ruby} extconf.rb
+%{__make} \
+	CC="%{__cc}" \
+	CFLAGS="%{rpmcflags} -fPIC"
 
-%{__ruby} setup.rb setup
-
-%if %{with tests}
-%{__ruby} -Ilib -Iext/fast_xs -Iext/hpricot_scan -r hpricot -e 1
-%endif
-
-# rdoc crashes on _why's craaazy code.
-#rdoc --op rdoc lib
-#rdoc --ri --op ri lib
+cd ../..
+rdoc --ri --op ri lib
+rdoc --op rdoc lib
+rm ri/created.rid
+rm ri/cache.ri
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{ruby_specdir},%{ruby_ridir}}
-%{__ruby} setup.rb install \
-	--prefix=$RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT{%{ruby_vendorlibdir},%{ruby_vendorarchdir},%{ruby_ridir},%{ruby_rdocdir}}
 
-cp -p %{pkgname}-%{version}.gemspec $RPM_BUILD_ROOT%{ruby_specdir}
+cp -a lib/* $RPM_BUILD_ROOT%{ruby_vendorlibdir}
+install -p ext/hpricot_scan/hpricot_scan.so $RPM_BUILD_ROOT%{ruby_vendorarchdir}
+install -p ext/fast_xs/fast_xs.so $RPM_BUILD_ROOT%{ruby_vendorarchdir}
 
-#cp -a ri/* $RPM_BUILD_ROOT%{ruby_ridir}
+cp -a ri/* $RPM_BUILD_ROOT%{ruby_ridir}
+cp -a rdoc $RPM_BUILD_ROOT%{ruby_rdocdir}/%{name}-%{version}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
+%doc README.md CHANGELOG COPYING
+%attr(755,root,root) %{ruby_vendorarchdir}/hpricot_scan.so
+%attr(755,root,root) %{ruby_vendorarchdir}/fast_xs.so
 %{ruby_vendorlibdir}/hpricot.rb
 %{ruby_vendorlibdir}/hpricot
-%attr(755,root,root) %{ruby_vendorarchdir}/fast_xs.so
-%attr(755,root,root) %{ruby_vendorarchdir}/hpricot_scan.so
-%{ruby_specdir}/%{pkgname}-%{version}.gemspec
+
+%files rdoc
+%defattr(644,root,root,755)
+%{ruby_rdocdir}/%{name}-%{version}
+
+%files ri
+%defattr(644,root,root,755)
+%{ruby_ridir}/Hpricot
+%{ruby_ridir}/Kernel
+%{ruby_ridir}/Object

@@ -1,0 +1,40 @@
+--- hpricot-0.8.6/ext/hpricot_scan/hpricot_scan.c.orig	2026-03-20 15:35:12.213158771 +0100
++++ hpricot-0.8.6/ext/hpricot_scan/hpricot_scan.c	2026-03-20 15:35:12.225153045 +0100
+@@ -22,7 +22,7 @@
+ #define RSTRING_PTR(str) RSTRING(str)->ptr
+ #endif
+ 
+-VALUE hpricot_css(VALUE, VALUE, VALUE, VALUE, VALUE);
++VALUE hpricot_css(VALUE, VALUE, VALUE, VALUE);
+ 
+ #define NO_WAY_SERIOUSLY "*** This should not happen, please file a bug report with the HTML you're parsing at http://github.com/hpricot/hpricot/issues.  So sorry!"
+ 
+@@ -6691,7 +6691,7 @@
+ static VALUE hpricot_struct_ref8(VALUE obj) {return H_ELE_GET(obj, 8);}
+ static VALUE hpricot_struct_ref9(VALUE obj) {return H_ELE_GET(obj, 9);}
+ 
+-static VALUE (*ref_func[10])() = {
++static VALUE (*ref_func[10])(VALUE) = {
+   hpricot_struct_ref0,
+   hpricot_struct_ref1,
+   hpricot_struct_ref2,
+@@ -6715,7 +6715,7 @@
+ static VALUE hpricot_struct_set8(VALUE obj, VALUE val) {return H_ELE_SET(obj, 8, val);}
+ static VALUE hpricot_struct_set9(VALUE obj, VALUE val) {return H_ELE_SET(obj, 9, val);}
+ 
+-static VALUE (*set_func[10])() = {
++static VALUE (*set_func[10])(VALUE, VALUE) = {
+   hpricot_struct_set0,
+   hpricot_struct_set1,
+   hpricot_struct_set2,
+--- hpricot-0.8.6/ext/fast_xs/fast_xs.c.orig	2026-03-20 15:36:22.563158753 +0100
++++ hpricot-0.8.6/ext/fast_xs/fast_xs.c	2026-03-20 15:36:22.568873737 +0100
+@@ -144,7 +144,7 @@
+ 	return rb_funcall(self, unpack_id, 1, U_fmt);
+ }
+ 
+-static VALUE unpack_uchar(VALUE self)
++static VALUE unpack_uchar(VALUE self, VALUE err)
+ {
+ 	return rb_funcall(self, unpack_id, 1, C_fmt);
+ }
