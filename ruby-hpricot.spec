@@ -1,24 +1,26 @@
-Summary:	A fast HTML parser
-Summary(pl.UTF-8):	Szybki parser HTML-a
+Summary:	A fast and easy HTML parser
+Summary(pl.UTF-8):	Szybki i prosty analizator HTML-a
 Name:		ruby-hpricot
 Version:	0.8.6
 Release:	8
 License:	MIT
 Group:		Development/Languages
-Source0:	https://rubygems.org/downloads/hpricot-%{version}.gem
-# Source0-md5:	b0f1f02448037f4f6243c33d5f818fa4
+Source0:	http://rubygems.org/downloads/hpricot-%{version}.gem
+# Source0-md5:	db006000000000000000000000000000
 Patch0:		hpricot-ruby34.patch
-URL:		https://github.com/hpricot/hpricot
+URL:		http://code.whytheluckystiff.net/hpricot/
 BuildRequires:	rpm-rubyprov
 BuildRequires:	rpmbuild(macros) >= 1.665
 BuildRequires:	ruby-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Hpricot is a fast HTML parser, based on a small C-based scanner.
+Hpricot is a fast and easy HTML parser written in C. It has a very
+convenient syntax, similar to jQuery.
 
 %description -l pl.UTF-8
-Hpricot to szybki parser HTML-a, oparty na niewielkim skanerze w C.
+Hpricot to szybki i prosty analizator HTML-a napisany w C. Ma bardzo
+wygodną składnię, podobną do jQuery.
 
 %package rdoc
 Summary:	HTML documentation for %{name}
