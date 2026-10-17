@@ -2,7 +2,7 @@ Summary:	A fast and easy HTML parser
 Summary(pl.UTF-8):	Szybki i prosty analizator HTML-a
 Name:		ruby-hpricot
 Version:	0.8.6
-Release:	9
+Release:	10
 License:	MIT
 Group:		Development/Languages
 Source0:	https://rubygems.org/downloads/hpricot-%{version}.gem
@@ -69,8 +69,8 @@ cd ../fast_xs
 cd ../..
 rdoc --ri --op ri lib
 rdoc --op rdoc lib
-rm ri/created.rid
-rm ri/cache.ri
+%{__rm} ri/created.rid
+%{__rm} ri/cache.ri
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -83,6 +83,10 @@ cp -p %{builddir}/hpricot-%{version}.gemspec $RPM_BUILD_ROOT%{ruby_specdir}
 
 cp -a ri/* $RPM_BUILD_ROOT%{ruby_ridir}
 cp -a rdoc $RPM_BUILD_ROOT%{ruby_rdocdir}/%{name}-%{version}
+
+# already in ruby-doc-ri
+%{__rm} $RPM_BUILD_ROOT%{ruby_ridir}/Kernel/cdesc-Kernel.ri
+%{__rm} $RPM_BUILD_ROOT%{ruby_ridir}/Object/cdesc-Object.ri
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -103,5 +107,8 @@ rm -rf $RPM_BUILD_ROOT
 %files ri
 %defattr(644,root,root,755)
 %{ruby_ridir}/Hpricot
-%{ruby_ridir}/Kernel
-%{ruby_ridir}/Object
+%{ruby_ridir}/Kernel/hpricot_slate_method_added-c.ri
+%{ruby_ridir}/Kernel/method_added-c.ri
+%{ruby_ridir}/Object/Hpricot-i.ri
+%{ruby_ridir}/Object/hpricot_slate_method_added-c.ri
+%{ruby_ridir}/Object/method_added-c.ri
