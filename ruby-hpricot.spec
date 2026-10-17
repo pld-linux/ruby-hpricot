@@ -2,7 +2,7 @@ Summary:	A fast and easy HTML parser
 Summary(pl.UTF-8):	Szybki i prosty analizator HTML-a
 Name:		ruby-hpricot
 Version:	0.8.6
-Release:	8
+Release:	9
 License:	MIT
 Group:		Development/Languages
 Source0:	https://rubygems.org/downloads/hpricot-%{version}.gem
@@ -73,11 +73,12 @@ rm ri/cache.ri
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{ruby_vendorlibdir},%{ruby_vendorarchdir},%{ruby_ridir},%{ruby_rdocdir}}
+install -d $RPM_BUILD_ROOT{%{ruby_vendorlibdir},%{ruby_vendorarchdir},%{ruby_specdir},%{ruby_ridir},%{ruby_rdocdir}}
 
 cp -a lib/* $RPM_BUILD_ROOT%{ruby_vendorlibdir}
 install -p ext/hpricot_scan/hpricot_scan.so $RPM_BUILD_ROOT%{ruby_vendorarchdir}
 install -p ext/fast_xs/fast_xs.so $RPM_BUILD_ROOT%{ruby_vendorarchdir}
+cp -p %{builddir}/hpricot-%{version}.gemspec $RPM_BUILD_ROOT%{ruby_specdir}
 
 cp -a ri/* $RPM_BUILD_ROOT%{ruby_ridir}
 cp -a rdoc $RPM_BUILD_ROOT%{ruby_rdocdir}/%{name}-%{version}
@@ -92,6 +93,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{ruby_vendorarchdir}/fast_xs.so
 %{ruby_vendorlibdir}/hpricot.rb
 %{ruby_vendorlibdir}/hpricot
+%{ruby_specdir}/hpricot-%{version}.gemspec
 
 %files rdoc
 %defattr(644,root,root,755)
