@@ -9,6 +9,7 @@ Source0:	https://rubygems.org/downloads/hpricot-%{version}.gem
 # Source0-md5:	b0f1f02448037f4f6243c33d5f818fa4
 Patch0:		hpricot-ruby34.patch
 URL:		https://github.com/hpricot/hpricot
+BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpm-rubyprov
 BuildRequires:	rpmbuild(macros) >= 1.665
 BuildRequires:	ruby-devel
